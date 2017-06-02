@@ -1,0 +1,10 @@
+Aici puteti adauga criteriile pe baza carora vor fi generate distributiile.
+
+{{html}}
+<h2>Adauga criteriu</h2>
+<div class="buttons">
+    <button>Custom</button>
+    <button>Day Restriction</button>
+    <button>Prefered</button>
+</div>
+{{/html}}
