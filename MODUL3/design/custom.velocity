@@ -1,0 +1,63 @@
+
+{{velocity}}
+
+#set($class = $xwiki.getClass("Modul3.Criterii.Custom"))
+#set($objs = $doc.getObjects("Modul3.Criterii.Custom"))
+
+#set($title = $request.get('title'))
+#set($priority = $request.get('priority'))
+#set($field = $request.get('field'))
+
+#set($delete = $request.get('delete'))
+
+#if($delete)
+    #foreach($obj in $objs)
+        #if($obj['title'] == $delete)
+            $doc.removeObject($obj)
+            $doc.save()
+            #set($objs = $doc.getObjects("Modul3.Criterii.Custom"))
+        #end
+    #end
+#end
+
+#if($title && $priority && $field)
+    #set($obj = $doc.newObject("Modul3.Criterii.Custom"))
+    $obj.set("title",$title)
+    $obj.set("priority",$priority)
+    $obj.set("field",$field)
+    $doc.save()
+#end
+{{html}}
+<h2>Criterii Custom</h2>
+    <form method="get" action="">
+        <label>Titlu</label><br />
+        <input type="text" name="title" /><br />
+        <label>Prioritate</label><br />
+        <input type="number" name="priority" /><br />
+        <label>Camp afectat</label><br />
+        <input type="text" name="field" /><br /><br />
+        <button type="submit">Adauga</button>
+    </form>
+ <table>
+    <thead>
+        <tr>
+            <th>Titlu</th>
+            <th>Priority</th>
+            <th>Field</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+      #foreach($obj in $objs)
+      <tr>
+          #foreach($prop in $class.properties) ## go through all properties
+               <td>$obj[$prop.getName()]</td>
+          #end
+          <td><a href="?delete=$obj['title']"><button>Delete</button></a></td>
+       </tr>
+      #end
+    </tbody>
+ </table>
+{{/html}}
+
+{{/velocity}}
